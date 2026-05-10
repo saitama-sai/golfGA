@@ -81,25 +81,20 @@ export class Vehicle {
     }
 
     // Sınır kontrolü (Duvarlardan da seksin)
-    let bouncedBorder = false;
     if (this.position.x < 0) {
       this.position = new Vector2D(0, this.position.y);
       this.velocity = new Vector2D(Math.abs(this.velocity.x) * 0.8, this.velocity.y);
-      bouncedBorder = true;
     } else if (this.position.x > canvasWidth) {
       this.position = new Vector2D(canvasWidth, this.position.y);
       this.velocity = new Vector2D(-Math.abs(this.velocity.x) * 0.8, this.velocity.y);
-      bouncedBorder = true;
     }
 
     if (this.position.y < 0) {
       this.position = new Vector2D(this.position.x, 0);
       this.velocity = new Vector2D(this.velocity.x, Math.abs(this.velocity.y) * 0.8);
-      bouncedBorder = true;
     } else if (this.position.y > canvasHeight) {
       this.position = new Vector2D(this.position.x, canvasHeight);
       this.velocity = new Vector2D(this.velocity.x, -Math.abs(this.velocity.y) * 0.8);
-      bouncedBorder = true;
     }
 
     // Sonar okumalarını güncelle
