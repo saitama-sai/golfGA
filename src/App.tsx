@@ -36,37 +36,33 @@ function createDefaultObstacles(): Obstacle[] {
   }
 
   // ==========================================
-  // İÇ BLOK (TÜPÜN İÇ ÇEPERİ)
+  // İÇ BLOK (TÜPÜN İÇ ÇEPERİ VE KISA YOLLAR)
   // ==========================================
-  // Alt Koridorun Tavanı
+  // Alt Koridorun Tavanı (Kırmızı ile işaretlenen kestirme yollar açıldı)
+  const bottomCeilingGaps = [270, 445]; // Başlangıcın hemen üstü ve orta kısım
   for (let x = 200; x <= 900; x += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(x, 450), radius: 22, type: 'wall' }));
+    if (!bottomCeilingGaps.includes(x)) {
+      obs.push(new Obstacle({ position: new Vector2D(x, 450), radius: 22, type: 'wall' }));
+    }
   }
   // Sağ Koridorun Sol Duvarı
   for (let y = 240; y <= 450; y += 35) {
     obs.push(new Obstacle({ position: new Vector2D(900, y), radius: 22, type: 'wall' }));
   }
-  // Üst Koridorun Tabanı
+  // Üst Koridorun Tabanı (Kırmızı ile işaretlenen 4 adet geçiş kapısı açıldı)
+  const topFloorGaps = [340, 480, 620, 795];
   for (let x = 200; x <= 900; x += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(x, 240), radius: 22, type: 'wall' }));
+    if (!topFloorGaps.includes(x)) {
+      obs.push(new Obstacle({ position: new Vector2D(x, 240), radius: 22, type: 'wall' }));
+    }
   }
 
   // ==========================================
-  // ZORLAŞTIRICI ENGELLER (SLALOM & TUZAKLAR)
+  // TUZAKLAR
   // ==========================================
-  // Alt Koridorda Yukarıdan sarkan engel (Slalom 1)
-  obs.push(new Obstacle({ position: new Vector2D(450, 485), radius: 22, type: 'wall' }));
-  obs.push(new Obstacle({ position: new Vector2D(450, 520), radius: 22, type: 'wall' }));
-  
-  // Alt Koridorda Aşağıdan çıkan engel (Slalom 2)
-  obs.push(new Obstacle({ position: new Vector2D(650, 555), radius: 22, type: 'wall' }));
-  obs.push(new Obstacle({ position: new Vector2D(650, 520), radius: 22, type: 'wall' }));
+  // (Slalom engelleri kullanıcının isteği üzerine tamamen kaldırıldı)
 
-  // Sağ Koridorda Sağdan çıkan engel (Slalom 3)
-  obs.push(new Obstacle({ position: new Vector2D(1005, 345), radius: 22, type: 'wall' }));
-  obs.push(new Obstacle({ position: new Vector2D(970, 345), radius: 22, type: 'wall' }));
-
-  // Üst Koridorda Su ve Kum Tuzakları (Keskin manevra gerektirir)
+  // Üst Koridorda Su ve Kum Tuzakları
   obs.push(new Obstacle({ position: new Vector2D(700, 170), radius: 35, type: 'water' }));
   obs.push(new Obstacle({ position: new Vector2D(500, 170), radius: 30, type: 'sand' }));
 
