@@ -9,12 +9,22 @@ function createDefaultObstacles(): Obstacle[] {
   const obs: Obstacle[] = [];
   
   // Sol Dış Duvar
-  for (let y = 50; y <= 580; y += 35) {
+  for (let y = 15; y <= 580; y += 35) {
     obs.push(new Obstacle({ position: new Vector2D(200, y), radius: 22, type: 'wall' }));
   }
   // Sağ Dış Duvar
-  for (let y = 50; y <= 580; y += 35) {
+  for (let y = 15; y <= 580; y += 35) {
     obs.push(new Obstacle({ position: new Vector2D(700, y), radius: 22, type: 'wall' }));
+  }
+
+  // Üst Dış Duvar (Dışarı kaçmayı önler)
+  for (let x = 200; x <= 700; x += 35) {
+    obs.push(new Obstacle({ position: new Vector2D(x, 15), radius: 22, type: 'wall' }));
+  }
+
+  // Alt Dış Duvar (Dışarı kaçmayı önler)
+  for (let x = 200; x <= 700; x += 35) {
+    obs.push(new Obstacle({ position: new Vector2D(x, 580), radius: 22, type: 'wall' }));
   }
 
   // Alt İç Duvar (Başlangıçtan sonra sağa zorlar)
