@@ -12,14 +12,19 @@ function createDefaultObstacles(): Obstacle[] {
   for (let y = -20; y <= 580; y += 35) {
     obs.push(new Obstacle({ position: new Vector2D(200, y), radius: 22, type: 'wall' }));
   }
-  // Sağ Dış Duvar
-  for (let y = -20; y <= 580; y += 35) {
+  // Sağ Dış Duvar (Üstte sağa dönen koridor için Y=155'ten başlıyor)
+  for (let y = 155; y <= 580; y += 35) {
     obs.push(new Obstacle({ position: new Vector2D(700, y), radius: 22, type: 'wall' }));
   }
 
-  // Üst Dış Duvar (Dışarı kaçmayı önler)
-  for (let x = 200; x <= 700; x += 35) {
+  // Üst Dış Duvar (Sağa giden yeni koridor için X=910'a kadar uzatıldı)
+  for (let x = 200; x <= 910; x += 35) {
     obs.push(new Obstacle({ position: new Vector2D(x, -20), radius: 22, type: 'wall' }));
+  }
+
+  // Yeni Sağ Koridorun Bitiş (Kapak) Duvarı
+  for (let y = -20; y <= 150; y += 35) {
+    obs.push(new Obstacle({ position: new Vector2D(910, y), radius: 22, type: 'wall' }));
   }
 
   // Alt Dış Duvar (Dışarı kaçmayı önler)
@@ -32,8 +37,8 @@ function createDefaultObstacles(): Obstacle[] {
     obs.push(new Obstacle({ position: new Vector2D(x, 350), radius: 22, type: 'wall' }));
   }
 
-  // Üst İç Duvar (İşaretlenen yerlerde 3 adet boşluk bırakıldı)
-  const upperWallXs = [400, 470, 505, 575, 610, 680];
+  // Üst İç Duvar (Sağdaki yeni koridoru oluşturacak şekilde uzatıldı, solda boşluklar var)
+  const upperWallXs = [400, 470, 505, 575, 610, 680, 715, 750, 785, 820, 855, 890];
   for (const x of upperWallXs) {
     obs.push(new Obstacle({ position: new Vector2D(x, 150), radius: 22, type: 'wall' }));
   }
@@ -42,9 +47,9 @@ function createDefaultObstacles(): Obstacle[] {
   obs.push(new Obstacle({ position: new Vector2D(620, 350), radius: 25, type: 'bunker' })); // Sağ köşede kum (küçültüldü)
   obs.push(new Obstacle({ position: new Vector2D(260, 150), radius: 25, type: 'water' }));  // Sol köşede su (küçültüldü)
   
-  // Hedefin (deliğin) koruyucuları - Arası açıldı
-  obs.push(new Obstacle({ position: new Vector2D(350, 100), radius: 18, type: 'tree' }));
-  obs.push(new Obstacle({ position: new Vector2D(550, 100), radius: 18, type: 'tree' }));
+  // Hedefin (deliğin) yeni koridordaki koruyucuları
+  obs.push(new Obstacle({ position: new Vector2D(780, 30), radius: 18, type: 'tree' }));
+  obs.push(new Obstacle({ position: new Vector2D(780, 100), radius: 18, type: 'tree' }));
 
   return obs;
 }
