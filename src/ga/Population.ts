@@ -120,7 +120,16 @@ export class Population {
 
     // 2. Yeni nesil oluştur
     const newVehicles: Vehicle[] = [];
-    for (let i = 0; i < this.vehicles.length; i++) {
+
+    // ELİTİZM (Elitism): En iyi genlerin kaybolmasını önlemek için 
+    // tüm zamanların en iyi DNA'sını (veya bu neslin en iyisini) mutasyonsuz olarak yeni nesle aktar.
+    if (this.bestDnaEver) {
+      // Şampiyon topu doğrudan kopyala
+      newVehicles.push(new Vehicle(this.startPosition, this.bestDnaEver));
+    }
+
+    // Geri kalan araçları çaprazlama ve mutasyonla üret
+    for (let i = newVehicles.length; i < this.vehicles.length; i++) {
       // Rastgele iki ebeveyn seç
       const parentA = matingPool[Math.floor(Math.random() * matingPool.length)];
       const parentB = matingPool[Math.floor(Math.random() * matingPool.length)];
