@@ -72,6 +72,7 @@ export class Vehicle {
           
           // Topu engelin dışına it (iç içe girmeyi önle)
           this.position = obstacle.position.add(normal.mult(obstacle.radius + 1));
+          break; // Aynı frame'de birden fazla duvara çarpıp sonsuz sekmeyi (glitch) önler
         } else {
           // Su veya kum gibi engeller topu eler (veya yavaşlatır)
           this.crashed = true;
