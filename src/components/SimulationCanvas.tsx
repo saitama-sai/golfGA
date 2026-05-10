@@ -74,8 +74,8 @@ export function SimulationCanvas({
         const w = Math.floor(rect.width);
         const h = Math.floor(Math.min(rect.height, window.innerHeight * 0.78));
         setCanvasSize({ width: w, height: h });
-        targetRef.current = new Vector2D(1050, 250); // Hedefi sağ yılan yolunun sonuna yerleştirdik
-        startPosRef.current = new Vector2D(450, h - 60); // Başlangıcı X=450'de sabitledik
+        targetRef.current = new Vector2D(950, 250); // Hedefi düz, mantıklı koridorun sonuna aldık
+        startPosRef.current = new Vector2D(450, h - 60); // Başlangıç pozisyonu
       }
     }
     handleResize();

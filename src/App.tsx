@@ -8,73 +8,48 @@ import type { PopulationStats } from './ga';
 function createDefaultObstacles(): Obstacle[] {
   const obs: Obstacle[] = [];
   
-  // Sol Dış Duvar
-  for (let y = -20; y <= 580; y += 35) {
+  // 1. Sol Dış Duvar
+  for (let y = 150; y <= 580; y += 35) {
     obs.push(new Obstacle({ position: new Vector2D(200, y), radius: 22, type: 'wall' }));
   }
-  // Sağ İç Duvar (Y=200 ile Y=350 arası açık - yılan yolunun girişi)
-  for (let y = -20; y <= 200; y += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(700, y), radius: 22, type: 'wall' }));
+
+  // 2. Üst Dış Duvar (Tavan)
+  for (let x = 200; x <= 1000; x += 35) {
+    obs.push(new Obstacle({ position: new Vector2D(x, 150), radius: 22, type: 'wall' }));
   }
+
+  // 3. Sağ Dış Duvar (Başlangıç alanının sağı)
   for (let y = 350; y <= 580; y += 35) {
     obs.push(new Obstacle({ position: new Vector2D(700, y), radius: 22, type: 'wall' }));
   }
 
-  // --- YENİ YILAN PARKURU (Kullanıcının Çizimi) ---
-  
-  // 1. Aşağı yönlendiren duvar (X=800)
-  for (let y = 200; y <= 450; y += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(800, y), radius: 22, type: 'wall' }));
-  }
-  
-  // 2. Yukarı yönlendiren sağ dış duvar (X=950)
-  for (let y = 300; y <= 580; y += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(950, y), radius: 22, type: 'wall' }));
-  }
-
-  // 3. Son koridorun tavanı (Y=200)
-  for (let x = 800; x <= 1100; x += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(x, 200), radius: 22, type: 'wall' }));
-  }
-
-  // 4. Son koridorun tabanı (Y=300)
-  for (let x = 950; x <= 1100; x += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(x, 300), radius: 22, type: 'wall' }));
-  }
-
-  // 5. En sağdaki kapak duvarı (X=1100)
-  for (let y = 200; y <= 300; y += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(1100, y), radius: 22, type: 'wall' }));
-  }
-
-  // Üst Dış Duvar (Sadece sol taraf için)
+  // 4. Alt Dış Duvar (Başlangıç alanının tabanı)
   for (let x = 200; x <= 700; x += 35) {
-    obs.push(new Obstacle({ position: new Vector2D(x, -20), radius: 22, type: 'wall' }));
-  }
-
-  // Alt Dış Duvar (Sağdaki yılan yolunun tabanını da kaplar)
-  for (let x = 200; x <= 950; x += 35) {
     obs.push(new Obstacle({ position: new Vector2D(x, 580), radius: 22, type: 'wall' }));
   }
 
-  // Alt İç Duvar (Başlangıçtan sonra sağa zorlar)
+  // 5. İç Duvar Sol (Kullanıcının yeşil çizdiği duvar - Aşılması gereken ilk engel)
   for (let x = 200; x <= 500; x += 35) {
     obs.push(new Obstacle({ position: new Vector2D(x, 350), radius: 22, type: 'wall' }));
   }
 
-  // Üst İç Duvar (İşaretlenen yerlerde 3 adet boşluk bırakıldı)
-  const upperWallXs = [400, 470, 505, 575, 610, 680];
-  for (const x of upperWallXs) {
-    obs.push(new Obstacle({ position: new Vector2D(x, 150), radius: 22, type: 'wall' }));
+  // 6. Koridor Alt Duvarı (Sağa giden yolun tabanı)
+  for (let x = 700; x <= 1000; x += 35) {
+    obs.push(new Obstacle({ position: new Vector2D(x, 350), radius: 22, type: 'wall' }));
   }
 
-  // Golf Royale tarzı ekstra tehlikeler - Biraz daha kenarlara alındı ve küçültüldü
-  obs.push(new Obstacle({ position: new Vector2D(620, 350), radius: 25, type: 'bunker' })); // Sağ köşede kum (küçültüldü)
-  obs.push(new Obstacle({ position: new Vector2D(260, 150), radius: 25, type: 'water' }));  // Sol köşede su (küçültüldü)
+  // 7. Koridor Bitiş Duvarı (Sağ kapak)
+  for (let y = 150; y <= 350; y += 35) {
+    obs.push(new Obstacle({ position: new Vector2D(1000, y), radius: 22, type: 'wall' }));
+  }
+
+  // Golf Royale tarzı tehlikeler
+  obs.push(new Obstacle({ position: new Vector2D(600, 480), radius: 35, type: 'sand' }));   // İlk çıkıştaki kum
+  obs.push(new Obstacle({ position: new Vector2D(500, 250), radius: 30, type: 'water' }));  // Dönüşteki su
   
-  // Hedefin (deliğin) yılan koridorundaki koruyucuları
-  obs.push(new Obstacle({ position: new Vector2D(1000, 220), radius: 18, type: 'tree' }));
-  obs.push(new Obstacle({ position: new Vector2D(1000, 280), radius: 18, type: 'tree' }));
+  // Hedefin (deliğin) koruyucuları (Koridorun sonunda)
+  obs.push(new Obstacle({ position: new Vector2D(880, 200), radius: 18, type: 'tree' }));
+  obs.push(new Obstacle({ position: new Vector2D(880, 300), radius: 18, type: 'tree' }));
 
   return obs;
 }
